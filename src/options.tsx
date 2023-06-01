@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import browser from "webextension-polyfill";
 
 const Options = () => {
   const [color, setColor] = useState<string>("");
@@ -9,40 +10,39 @@ const Options = () => {
   useEffect(() => {
     // Restores select box and checkbox state using the preferences
     // stored in chrome.storage.
-    chrome.storage.sync.get(
-      {
+    browser.storage.sync
+      .get({
         favoriteColor: "red",
         likesColor: true,
-      },
-      (items) => {
+      })
+      .then((items) => {
         setColor(items.favoriteColor);
         setLike(items.likesColor);
-      }
-    );
+      });
   }, []);
 
   const saveOptions = () => {
     // Saves options to chrome.storage.sync.
-    chrome.storage.sync.set(
-      {
+    browser.storage.sync
+      .set({
         favoriteColor: color,
         likesColor: like,
-      },
-      () => {
+      })
+      .then(() => {
         // Update status to let user know options were saved.
         setStatus("Options saved.");
         const id = setTimeout(() => {
           setStatus("");
         }, 1000);
         return () => clearTimeout(id);
-      }
-    );
+      });
   };
 
   return (
     <>
       <div>
-        Favorite color: <select
+        Favorite color:{" "}
+        <select
           value={color}
           onChange={(event) => setColor(event.target.value)}
         >
