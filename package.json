@@ -4,8 +4,10 @@
   "description": "chrome-extension-typescript-starter",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack --config webpack/webpack.dev.js --watch",
-    "build": "webpack --config webpack/webpack.prod.js",
+    "watch:chromium": "webpack --config webpack/chromium/webpack.dev.js --watch",
+    "build:chromium": "webpack --config webpack/chromium/webpack.prod.js",
+    "watch:firefox": "webpack --config webpack/firefox/webpack.dev.js --watch",
+    "build:firefox": "webpack --config webpack/firefox/webpack.prod.js",
     "clean": "rimraf dist",
     "test": "npx jest",
     "style": "prettier --write \"src/**/*.{ts,tsx}\""

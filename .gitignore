@@ -1,4 +1,6 @@
 npm-debug.log
 node_modules/
 dist/
+dist_firefox/
+dist_chromium/
 tmp/
