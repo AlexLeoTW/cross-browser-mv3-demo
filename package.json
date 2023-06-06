@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-typescript-starter",
+  "name": "cross-browser-extension-mv3-demo",
   "version": "1.0.0",
-  "description": "chrome-extension-typescript-starter",
+  "description": "cross-browser-extension-mv3-demo",
   "main": "index.js",
   "scripts": {
     "watch:chromium": "webpack --config webpack/chromium/webpack.dev.js --watch",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chibat/chrome-extension-typescript-starter.git"
+    "url": "https://github.com/AlexLeoTW/cross-browser-mv3-demo"
   },
   "dependencies": {
     "react": "^18.2.0",

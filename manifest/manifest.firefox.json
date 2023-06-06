@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
 
-  "name": "Chrome Extension TypeScript Starter",
-  "description": "Chrome Extension, TypeScript, Visual Studio Code",
+  "name": "Cross Browser Extension MV3 Demo",
+  "description": "Firefox Extension, TypeScript, Visual Studio Code",
   "version": "1.0",
 
   "options_ui": {
@@ -10,7 +10,11 @@
   },
 
   "action": {
-    "default_icon": "icon.png",
+    "default_icon": {
+      "16": "icon_16.png",
+      "24": "icon_24.png",
+      "32": "icon_32.png"
+    },
     "default_popup": "popup.html"
   },
 
