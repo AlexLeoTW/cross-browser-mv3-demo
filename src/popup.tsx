@@ -16,19 +16,18 @@ const Popup = () => {
     });
   }, []);
 
-  const changeBackground = () => {
-    browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
-      const tab = tabs[0];
-      if (tab.id) {
-        browser.tabs
-          .sendMessage(tab.id, {
-            color: "#555555",
-          })
-          .then((msg) => {
-            console.log("result message:", msg);
-          });
-      }
+  const changeBackground = async () => {
+    const tabs = await browser.tabs.query({
+      active: true,
+      currentWindow: true,
     });
+    const tab = tabs[0];
+    if (tab.id) {
+      const msg = await browser.tabs.sendMessage(tab.id, {
+        color: "#555555",
+      });
+      console.log("result message:", msg);
+    }
   };
 
   return (
