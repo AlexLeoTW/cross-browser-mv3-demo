@@ -5,6 +5,7 @@ import browser from "webextension-polyfill";
 const Popup = () => {
   const [count, setCount] = useState(0);
   const [currentURL, setCurrentURL] = useState<string>();
+  const [ip, setIp] = useState<string>("unknown");
 
   useEffect(() => {
     browser.action.setBadgeText({ text: count.toString() });
@@ -30,11 +31,18 @@ const Popup = () => {
     }
   };
 
+  const updateIp = React.useCallback(async () => {
+    const response = await fetch("https://ipecho.net/plain");
+    const data = await response.text();
+    setIp(data);
+  }, []);
+
   return (
     <>
       <ul style={{ minWidth: "700px" }}>
         <li>Current URL: {currentURL}</li>
         <li>Current Time: {new Date().toLocaleTimeString()}</li>
+        <li>Current IP: {ip}</li>
       </ul>
       <button
         onClick={() => setCount(count + 1)}
@@ -43,6 +51,7 @@ const Popup = () => {
         count up
       </button>
       <button onClick={changeBackground}>change background</button>
+      <button onClick={updateIp}>update IP</button>
     </>
   );
 };
