@@ -5,6 +5,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, "../../dist_chromium/js"),
     filename: "[name].js",
+    clean: true,
   },
   plugins: [
     new CopyPlugin({
