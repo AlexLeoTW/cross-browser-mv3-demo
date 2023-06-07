@@ -29,7 +29,7 @@
     "scripts": ["js/background.js"]
   },
 
-  "permissions": ["storage"],
+  "permissions": ["storage", "webRequest", "webRequestBlocking"],
 
   "host_permissions": ["<all_urls>"]
 }

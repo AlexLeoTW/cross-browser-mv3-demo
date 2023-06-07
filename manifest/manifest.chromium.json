@@ -29,7 +29,8 @@
     "service_worker": "js/background.js"
   },
 
-  "permissions": ["storage"],
+  "permissions": ["storage", "webRequest"],
+  "optional_permissions": ["webRequestBlocking"],
 
   "host_permissions": ["<all_urls>"]
 }
