@@ -24,6 +24,9 @@ async function blockIpEcho() {
           action: { type: "block" },
           condition: {
             urlFilter: "ipecho.net",
+            initiatorDomains: [
+              browser.runtime.getURL("/").split("://")[1].split("/")[0],
+            ],
           },
         },
       ],
