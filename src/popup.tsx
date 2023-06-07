@@ -5,6 +5,8 @@ import browser from "webextension-polyfill";
 const Popup = () => {
   const [count, setCount] = useState(0);
   const [currentURL, setCurrentURL] = useState<string>();
+  const [ip, setIp] = useState<string>("unknown");
+  const [allowIpEcho, setAllowIpEcho] = useState<boolean>(false);
 
   useEffect(() => {
     browser.action.setBadgeText({ text: count.toString() });
@@ -13,6 +15,16 @@ const Popup = () => {
   useEffect(() => {
     browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
       setCurrentURL(tabs[0].url);
+    });
+  }, []);
+
+  // load stored settings
+  useEffect(() => {
+    console.log("load stored settings");
+
+    browser.storage.local.get("allowIpEcho").then(({ allowIpEcho }) => {
+      console.log(`allowIpEcho: ${allowIpEcho}`);
+      setAllowIpEcho(allowIpEcho);
     });
   }, []);
 
@@ -30,11 +42,32 @@ const Popup = () => {
     }
   };
 
+  const updateIp = React.useCallback(async () => {
+    try {
+      const response = await fetch("https://ipecho.net/plain");
+      const data = await response.text();
+      console.log(`current ip: ${data}`);
+      setIp(data);
+    } catch (error) {
+      console.log("oops! cannot send request ot ipecho.net");
+    }
+  }, [ip]);
+
+  const toggleAllowIpEcho = React.useCallback(async () => {
+    const response = await browser.runtime.sendMessage({
+      type: allowIpEcho ? "blockIpEcho" : "allowIpEcho",
+    });
+    setAllowIpEcho(!allowIpEcho);
+
+    console.log(response);
+  }, [allowIpEcho]);
+
   return (
     <>
       <ul style={{ minWidth: "700px" }}>
         <li>Current URL: {currentURL}</li>
         <li>Current Time: {new Date().toLocaleTimeString()}</li>
+        <li>Current IP: {ip}</li>
       </ul>
       <button
         onClick={() => setCount(count + 1)}
@@ -43,6 +76,10 @@ const Popup = () => {
         count up
       </button>
       <button onClick={changeBackground}>change background</button>
+      <button onClick={updateIp}>update IP</button>
+      <button onClick={toggleAllowIpEcho}>
+        {allowIpEcho ? "block" : "allow"} ipechp.net
+      </button>
     </>
   );
 };
